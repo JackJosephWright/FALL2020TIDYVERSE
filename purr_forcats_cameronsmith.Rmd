@@ -1,7 +1,7 @@
 ---
 title: "Tidyverse Assignment - Purrr and Forcats and Vignette"
-author: "Cameron Smith"
-date: "10/26/2020"
+author: "Cameron Smith, edited by Jack Wright"
+date: "11/7/2020"
 output: html_document
 ---
 
@@ -41,7 +41,10 @@ str(df)
 
 Forcats is focused on making it easier to work with factors in R.  One such function is fct_infreq(), which reorders a factor based on the frequency of values it has.  In the example below I will use this function to reorder the flavor_profile variable based on the frequency of its levels in the dataset.
 
+JACK: The flavor_profile column was not yet set as a factor. I added a line to format it as a factor. 
 ```{r}
+#set flavor profile as a factor
+df$flavor_profile<-as.factor(df$flavor_profile)
 # View current structure of flavor_profile factor
 levels(df$flavor_profile)
 
@@ -59,19 +62,23 @@ levels(df$flavor_profile)
 
 Purr is focused on making it easier to work with functions and vectors in R.  One such function is pluck() which provides a flexible way to quickly extract an element.  It has a sister function named chuck() which is similar except that it throws errors when something does not exist, rather than simply returning NULL.
 
+JACK: a column in a data frame is itself a list, so there is no need to first turn the column into a list.
+
 ```{r}
 
 # Create an example list
-example_list <- as.list(df$ingredients)
+#example_list <- as.list(df$ingredients)
+#a data frame is a list of lists, so you don't need to set the column to a list
 
 # Pluck an element by index
-pluck(example_list, 1)
+pluck(df$ingredients, 1)
+
 
 # Searching for element that does not exist - pluck returns NULL
-pluck(example_list, 100000)
+pluck(df$ingredients, 100000)
 
 # But chuck returns an error
-chuck(example_list, 100000)
+chuck(df$ingredients, 100000)
 ```
 
 ### Conclusion
